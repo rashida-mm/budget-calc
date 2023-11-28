@@ -13,22 +13,29 @@ let balElm = document.getElementById("bal");
 let amtElm = document.getElementById("amt");
 
 function setamt() {
-
     let totalAmt = document.getElementById("totAmt").value;
+
     if (totalAmt === "") {
         alert("Enter the amount!");
     } else {
-        localStorage.setItem('total',totalAmt)
-        amtElm.innerHTML = totalAmt;
-        bal.innerHTML = totalAmt;
+        // Increment budget when setting a new budget
+        let newTotal = parseFloat(localStorage.getItem('totalAmount')) || 0;
+        newTotal += parseFloat(totalAmt);
+        localStorage.setItem('totalAmount', newTotal.toFixed(2));
+
+        amtElm.innerHTML = newTotal;
+        balElm.innerHTML = newTotal;
+
+        localStorage.setItem('total', totalAmt);
         alert("Amount Added");
     }
-   
 }
+
 function checkamt() {
 
     let exptype = document.getElementById("expType").value;
     let expamt = document.getElementById("expAmt").value;
+
     if (expamt === "" || exptype === "") {
         alert("Please enter the amount and type");
     } else {
