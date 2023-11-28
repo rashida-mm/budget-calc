@@ -47,8 +47,9 @@ function checkamt() {
         newTotalExpenses += parseFloat(expamt);
         localStorage.setItem('totalExpenses', newTotalExpenses.toFixed(2));
 
-        let newBalance = totalAmt - parseFloat(newTotalExpenses);
-        expenses.push({ type: exptype, amount: expamt, balance: newBalance });
+        let newTotal = parseFloat(localStorage.getItem('totalAmount')) || 0;
+        let newBalance = newTotal - parseFloat(newTotalExpenses);
+        expenses.push({ type: exptype, amount: expamt,budget:newTotal, balance: newBalance });
         localStorage.setItem('expenses', JSON.stringify(expenses));
 
         expElm.innerHTML = newTotalExpenses.toFixed(2);
@@ -72,6 +73,7 @@ function displayExpenses() {
         <tr>
         <td>${expense.type}</td>
         <td>${expense.amount}</td>
+        <td>${expense.budget}</td>
         <td>${expense.balance}</td></tr>`;
     });
     expensedetails.innerHTML = tableHTML;
@@ -86,6 +88,7 @@ function clearrecord(){
         expElm.innerHTML = "0"; 
         balElm.innerHTML = "0"; 
         document.getElementById("expensedetails").innerHTML = '';
+        localStorage.clear();
 }
 alert("Cleared all data successfully");
 }
